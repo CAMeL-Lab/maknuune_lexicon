@@ -1,0 +1,582 @@
+\chapter{Introduction}
+
+\textit{The content of this introduction is a modified republication of \citet{dibas2022maknuune}}.
+
+\pagestyle{plain}
+
+\section*{Background}
+\addcontentsline{toc}{section}{\protect\numberline{}Background}%
+Arabic is a collective of historically related variants that co-exist in a diglossic \citep{Ferguson:1959:diglossia} relationship between a Standard variant and geographically specific dialectal variants. Standard Arabic (SA, \foreignlanguage{arabic}{العربية الفصحى})
+is typically used to refer to the older Classical Arabic (CA) used in Quranic texts and pre-islamic poetry, all the way to Modern SA (MSA), the official language of news and culture in the Arab World.  Dialectal Arabic (DA) is classified geographically into regions such as Egyptian, Levantine, Maghrebi, and Gulf.
+%\todo{cite transliteration}
+%\cite{}.\todo{add citations?}   
+The dialects, which  differ among themselves and SA, are the primary mode of spoken communication, although increasingly they are dominating in written form on social media.  That said, DA has no official prescriptive grammars or orthographic standards, unlike the highly standardized and regulated MSA.  In the realm of natural language processing (NLP), MSA has relatively more annotated and parallel resources than DA; although there are many notable efforts to fill gaps in all Arabic variants \citep{alyafeai2022masader}.
+
+In this work, we focus on Palestinian Arabic (PAL), which is part of the South Levantine Arabic dialect subgroup. PAL consists of several sub-dialects in the region of Historic Palestine that %generally 
+vary in terms of their phonology and lexical choice \citep{Jarrar:2016:curras}. 
+PAL, like all other DA,  has been historically influenced by many languages, specifically, in its case, Syriac, Turkish, Persian, English and most recently Modern Hebrew \citep{moin2019etymological}, as well as other Arabic dialects that came in interaction with PAL after the Nakba. %\todo{this is tough to write about unemotionally!}
+%
+While this research effort was originally motivated by the need to document and preserve the cultural heritage and unique identities 
+of the various PAL sub-dialects, it has expanded to cover PAL's ever-evolving nature as a living language, and provides a resource to support research and development in Arabic dialect NLP.
+
+Concretely, we present \textbf{Maknuune}~\foreignlanguage{arabic}{مكنونة},\footnote{\foreignlanguage{arabic}{مكنونة}~/maknūne/ is a PAL farming term that refers to an egg intentionally left behind in a specific location to encourage the chicken to lay more eggs in that location.
+We hope that the lexicon will encourage other researchers and citizen linguists to contribute to it.}
+%We name our open-source lexicon after it, hoping that more researchers and citizen linguists will contribute to it.}
+%
+a large open lexicon for PAL, with over 36K entries from 17K lemmas, and 3.7K roots.\footnote{In this initial phase of Maknuune, we focus on the PAL sub-dialects spoken in the West Bank, an area with dialectal diversity across many dimensions such as \textit{lifestyle} (urban, rural, bedouin), religion, gender, and social class.}
+%
+All entries include diacritized Arabic orthography and phonological transcription following \citep{Habash:2018:unified}, as well as English glosses. Important inflectional variants are included for some lemmas, such as broken plural and templatic feminine. %, as well as verbal aspect 
+About 10\%  of the entries are phrases (multiword expressions) indexed by their primary lemmas. And about 67\%  
+of the entries include MSA glosses,  examples, and/or notes on grammar, usage, or location of collected entry.
+%
+To our knowledge, Maknuune is the largest open machine-readable dictionary for PAL. Maknuune is publicly viewable and downloadable.\footnote{\url{www.palestine-lexicon.org}}
+%
+%We present our data collection process and annotation guidelines, which we hope can be of use for similar efforts on other languages and dialects.
+
+We discuss some related work in Section~\ref{related}, and highlight some PAL linguistic facts %and challenges 
+that motivated many of our 
+%lexicon 
+design choices in Section~\ref{lingfacts}.  Section~\ref{method} presents our data collection process and annotation guidelines. We present statistics for our lexicon and evaluate its coverage 
+%compare it with the Curras corpus \citep{Jarrar:2016:curras} 
+%and Madar Lexicon-Jerusalem?
+in Section~\ref{eval}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section*{Related Work}
+\addcontentsline{toc}{section}{\protect\numberline{}Related Work}%
+\label{related}
+%Previous important NLP efforts on PAL include the annotated Curras corpus \citep{Jarrar:2016:curras,NewJarrar}, the Shami corpus \cite{}\todo{@Chris: add citation for Shami; and new Curras}. The MADAR corpus lexicon included 
+%\todo{German linguistic atlas of Syria and Palestine; Syrian dictionary from Georgetown; Anis Friha for Lebanese; Olive tree compare}
+%A Dictionary of Syrian Arabic : English-Arabic
+%Paperback Georgetown Classics in Arabic Languages and Linguistics series Arabic
+%  Karl Stowasser and  Moukhtar Ani
+
+
+\paragraph{Linguistic Descriptions} There are several linguistic references describing various aspects of PAL \citep{Rice:1979:eastern, herzallah1990aspects, hopkins1995sarar, elihai2004olive, talmon200419th, bassal2012hebrew, cotter2015sociolinguistics}. These are mostly targeting academics and language learners. We consulted many of these resources as part of developing our annotation guidelines.
+
+%Furthermore, an increasing amount of attention has been  allotted to the development of resources for DA, which in the past has tended to take the back seat to the benefit of MSA.
+
+%DA Datasets can roughly be divided into two categories: lexicons and corpora. The former constitutes a listing of possibly inflected lemmas, and the latter being an annotated collection of sentences. A corpus can be turned into a lexicon by uniquifying its entries based on the lemma and form fields. Below, we provide an account of a few relevant examples.
+
+\paragraph{Dialectal Corpora}
+We can group DA corpora based on the degree of richness in their annotations.
+%
+%which are either completely free of annotations, or are annotated for some simple features such as dialect id. 
+Some noteworthy examples of unannotated or lightly annotated corpora of relevance include the MADAR Corpus \citep{Bouamor:2018:madar}, comprising 2K parallel sentences spread across 25 dialects of Arabic, including PAL (Jerusalem variety) and the NADI corpus for nuanced dialect identification \citep{abdulmageed2021nadi}. The Shami Corpus \citep{abu-kwaik-etal-2018-shami} includes 21K PAL sentences, and the Parallel Arabic Dialect Corpus (PADIC) contains 6.4K PAL sentences \citep{Meftouh:2015:machine}. In the spirit of genre diversification and wider coverage across dialects, \citep{el-haj-2020-habibi}  introduced the Habibi Corpus for song lyrics, which comprises songs from many Arab countries including all Levantine Arab countries.
+
+Public and freely available morphologically annotated corpora are scarce for DA and often do not agree on annotation guidelines. A notable annotated dataset for PAL is the Curras corpus \citep{Jarrar:2016:curras}, a 56K-token morphologically annotated corpus. 
+%
+Other annotated  Levantine dialect efforts include the Jordan Comprehensive Contemporary Arabic Corpus (JCCA)
+\citep{Sawalha:2019:construction}, the Jordanian and Syrian corpora by \citep{alshargi:2019:morphologically}, and the
+Baladi corpus of Lebanese Arabic \citep{alhaff-EtAl:2022:LREC}.
+
+We consulted some of the public corpora as part of the development of Maknuune. However, most of the above datasets are based on web scrapes, which limits the amount of actual lemma coverage that they could attain.
+%, which is why lexicons are also available. 
+
+
+\paragraph{Dialectal Lexicons} 
+Examples of machine-readable DA lexicons include the 36K-lemma lexicon used for the CALIMA EGY fully inflected morphological analyzer \citep{Habash:2012:morphological}, based on the CALLHOME Egypt lexicon \citep{Gadalla:1997:callhome}, and the 51K-lemma Egyptian Arabic Tharwa lexicon  \citep{Diab:2014:tharwa}, which provides some morphological annotations.
+
+The \textit{Palestinian Colloquial Arabic Vocabulary} comprises 4.5K entries including expressions \citep{younis2021palestinian}, and  the MADAR Lexicon contains 2.7K entries dedicated to the Jerusalem variety of PAL, including lemmas, phonological transcriptions, and glosses in MSA, English and French \citep{Bouamor:2018:madar}.
+
+In addition to the above there are a number of dictionaries for Levantine Arabic variants, e.g., for PAL, 
+\citet{barghouti2001palestinian}, \citet{elihai2004olive} (9K entries and 17K phrases), \citet{moin2019etymological}, and \citet{seeger2022dictionary} (more than 30K entries and phrases); for Lebanese Arabic, \citet{freiha:1973:dictionary} (ca. 5K entries), and for Syrian Arabic \citet{stowasser2004dictionary} (15K entries).
+These resources include  base lemma forms, occasional plural forms, verb aspect inflections, and expressions; however,
+none of them are publicly available in a machine-readable (i.e., tabular or structured) format, to the best of our knowledge.
+
+%The lexicon presented in this work strives to increase coverage of dialectal content, complementing the above resources with entries that may not be easily be found in web-scraped content as will be discussed in the evaluation section (Section~\ref{eval}). More importantly, our morphologically annotated lexicon is computer-readable.
+%
+The lexicon presented in this work strives to be a large-scale and open resource with rich entries covering  phonology, morphology, and lexical expressions, and with a wide-ranging coverage of PAL sub-dialects. The lexicon may never be complete, but by making it open to sharing and contribution, we hope it will become central and useful to NLP researchers and developers, as well as to linguists working on Arabic and its dialects.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newpage 
+\section*{Linguistic Facts}
+\addcontentsline{toc}{section}{\protect\numberline{}Linguistic Facts}%
+\label{lingfacts}
+In this section we present some general linguistic facts about PAL and highlight specific challenging phenomena that motivated many of our annotation decisions.
+
+ 
+\subsection*{Phonology and Orthography}
+Like all other DA, and unlike MSA, PAL has no standard orthography rules \citep{Jarrar:2016:curras,Habash:2018:unified}.  In practice, PAL is primarily written in Arabic script, and to a lesser extent in Arabizi style romanization \citep{Darwish:2014:arabizi}. Some of the variations in the written form reflect the words' phonology, morphology, and/or etymological connections to MSA.  Orthogonal and detrimental to the orthography challenge, PAL has a high degree of variability within it sub-dialects in phonological terms. We highlight some below, noting that some also exist in other DA.
+
+\paragraph{Consonantal Variables} 
+A number of PAL consonants vary widely within sub-dialects. 
+For example, the  voiceless velar stop \caphi{k} is affricated to the palatal  \caphi{tsh} in many PAL rural varieties \citep{herzallah1990aspects}, e.g., \foreignlanguage{arabic}{كَيف} 
+{\it kayf} `how' appears as \caphi{k ee f} (urban) or \caphi{tsh ee f} (rural).\footnote{Arabic orthographic transliteration is presented in the HSB Scheme (italics) \citep{Habash:2007:arabic-transliteration}. Arabic script orthography is presented in the CODA* scheme, and Arabic phonology is presented in the CAPHI scheme (between /../) \citep{Habash:2018:unified}.}
+%
+Similarly, the MSA voiceless uvular stop \caphi{q} in the word \foreignlanguage{arabic}{قَلْب} 
+{\it qal.b}
+`heart'  is realized either as glottal stop \caphi{2 a l b} in urban dialects, as a voiceless velar stop \caphi{k a l b} in rural dialects, or a voiced velar stop \caphi{g a l b} in Bedouin dialects \citep{herzallah1990aspects}. 
+%
+It should be noted that there are some exceptions that do not conform to the above generalizations. For example, in Beit Fajjar,\footnote{A Palestinian town located 8 kilometers south of Bethlehem in the West Bank.} the word \foreignlanguage{arabic}{قَهْوَة} 
+{\it qah.wa{\TAMARBUTA}}
+`coffee' typically varying elsewhere  as \caphi{\{2,q,g,k\} a h w e} is realized as \caphi{tsh~h~ee~w~a}.
+Moreover, some words do not have varying pronunciations such as \foreignlanguage{arabic}{عْقَال} 
+{\it {\AYN}.qaAl}
+\caphi{3~g~aa~l} `Egal headband'.
+
+
+%Whereas some researchers claim the glottal stop /2/ developed directly from the voiceless uvular stop itself \citep{levin1994grammar, horesh2000toward} 
+%others assumed that /q/ and /2/ and  other variants like /k/, /q./ and /g/ existed side by side, until  the glottal stop ultimately became the
+%sole phonetic representation that reflects the phoneme /q/ \citep{cotter2015sociolinguistics}.
+
+\paragraph{Monophthongization} 
+Some PAL diphthongs shift to different monophthongs in different locations. 
+For example the \caphi{a y} diphthong in \foreignlanguage{arabic}{شَيخ}
+{\it {\SHIN}ayx} \caphi{sh~a~y~kh} `Sheikh' shifts often to \caphi{ee} (\caphi{sh ee kh}), but also to \caphi{ii} (\caphi{sh ii kh}).\footnote{In the Palestinian village of Ramadin, near Hebron in the West Bank.}
+%
+Following the CODA*  guidelines for diacritizing DA \citep{Habash:2018:unified}, we spell the \caphi{oo} and \caphi{ee} sounds using 
+\foreignlanguage{arabic}{ىَو}~{\it aw}
+and \foreignlanguage{arabic}{ىَي}~{\it ay} 
+(without a \textit{sukun} on the \foreignlanguage{arabic}{و} \textit{w} or \foreignlanguage{arabic}{ي} 
+\textit{y}), respectively, e.g.,
+\foreignlanguage{arabic}{كَوم} \textit{kawm} \caphi{k oo m} `pile' and \foreignlanguage{arabic}{بَيت}
+\textit{bayt} \caphi{b ee t} `house'.
+%%%%
+
+
+%Another phonological process that can be observed in the dialect of Ramadin is monophthongization. It is a type of vowel shift and it is defined as a sound change by which a diphthong becomes a monophthong \citep{dressler1984explaining}. The words \foreignlanguage{arabic}{صَيفْ} \caphi{s.~a~y~f}, \foreignlanguage{arabic}{ضَيْف} \caphi{d.~a~y~f} "guest",  and \foreignlanguage{arabic}{شيْخ} "\caphi{sh~a~y~kh} "Sheikh", all change into \caphi{dh. ii f}, \caphi{s. ii f} and \caphi{sh ii kh}  respectively. 
+
+%NEED CITATION FOR One typical feature of Bedouin dialects is commonly known as "Gahawah/Ghawah syndrome". It simply means the insertion of /a/ in a cluster aGC... where (G = gutturals /x, \textsubdot{g}, \textipa{\.h, P, Q}, h/). This can be seen in examples like \foreignlanguage{arabic}{قهوة} \caphi{g~h~a~w~a} `coffee', \foreignlanguage{arabic}{بغلة}  \caphi{b~gh~a.~l.~a} `mule',  \foreignlanguage{arabic}{سخلة} \caphi{s~kh~a.~l.~a} `lamb',  and \foreignlanguage{arabic}{سعوة}  \caphi{s~3~a~w~a} `hen'.
+
+\paragraph{Metathesis} 
+In some rural dialects in villages near Tulkarem, Jenin and Ramallah, there are words with consonant pairs within a syllable that appear in a different order than is the norm in PAL, e.g., a word like \foreignlanguage{arabic}{كَهْرَبَا} 
+{\it kah.rabaA} \caphi{k a h r a b a} `electricity' realizes as \caphi{k a r h a b a}.
+
+\paragraph{Epenthesis}
+PAL exhibits systematic epenthesis of the \caphi{i} or \caphi{u} sounds producing paired word alternations
+such as \caphi{b a 3 d} and \caphi{b a 3 i d} for \foreignlanguage{arabic}{بعد} `still;after'
+or
+\caphi{kh u b z} and \caphi{kh u b u z} or \caphi{kh~u~b~i~z} (in different sub-dialects) for \foreignlanguage{arabic}{خبز} `bread'.
+We opted to use the fully epenthesized forms in the lexicon, i.e., 
+\foreignlanguage{arabic}{بَعِد}
+\textit{ba{\AYN}id},
+\foreignlanguage{arabic}{خُبُز}
+\textit{xubuz},
+and
+\foreignlanguage{arabic}{خُبِز}
+\textit{xubiz}, for the above mentioned examples.
+
+
+
+
+\subsection*{Morphology}
+
+Like other DA, PAL has a complex morphology employing templatic and concatenative morphemes, and including a  rich set of morphological features: gender, number, person, state, aspect, in addition to numerous clitics.  We highlight some specific morphological phenomena that we needed to handle.
+
+\paragraph{Ta Marbuta}
+The so-called feminine singular suffix morpheme, or Ta Marbuta (\foreignlanguage{arabic}{ة} \TAMARBUTA), is a morpheme that can be used to mark feminine singular nominals, but that also appears with masculine singular and plural nominals.
+Morphophonemically, it has a number of forms in PAL that vary contextually. 
+%
+First, in some PAL sub-dialects, the Ta Marbuta is pronounced as \caphi{a} when preceded by an emphatic consonant,  velars, and pharyngeal fricatives, e.g., 
+\foreignlanguage{arabic}{بَطَّة}
+{\it baT{\SHADDA}a{\TAMARBUTA}}
+\caphi{b a t. t. a}
+`duck'; otherwise it realizes as \caphi{e}, e.g., \foreignlanguage{arabic}{بِسِّة}
+{\it bis{\SHADDA}i{\TAMARBUTA}}
+\caphi{b i s s e}. 
+In some northern PAL dialects, the \caphi{e} variant appears as \caphi{i}; and in some southern PAL dialects, the distinction is gone and all Ta Marbutas are pronounced \caphi{a}.
+%
+Second, the Ta Marbuta turns into its allomorph \caphi{i t} in {\it Idafa} constructions, e.g., \caphi{b i s s i t} `the/a cat of'. 
+Finally, for some active participle deverbal nouns, the Ta Marbuta realizes as \caphi{aa} or \caphi{ii t} when followed by a pronominal object clitic, e.g., \foreignlanguage{arabic}{كَاتْبَاه}
+{\it kaAt.baAh} \caphi{k aa t b aa (h)} or \foreignlanguage{arabic}{كَاتْبِيْتُه}
+{\it kaAt.biy.tuh} or \caphi{k~a~t~b~ii~t~u~(h)} `she wrote it'.
+
+
+
+%One of the most prominent phenomena regarding allomorphy in Arabic (both MSA and DA) is the realization of the feminine singular suffix morpheme (Ta Marbuta), which is
+%pronounced in MSA as /2atan/ except at utterance final positions (where it is pronounced as /a/ ). In
+%most PAL dialects and sub dialects, the feminine suffix is pronounced as follows:
+
+%[a] when the feminine singular suffix morpheme (Ta Marbuta) is preceded by an emphatic consonant, i.e. uvularized coronals \caphi{s., d., t., dh.}, velars \caphi{gh, kh,q} and pharyngeal Fricatives \caphi{7, 3}. For example, \foreignlanguage{arabic}{بطَّة} "duck" \caphi{b a t. t. a}, \foreignlanguage{arabic}{بلغة} "one item of slippers" \caphi{b a l gh a}, \foreignlanguage{arabic}{طلعة} "upill or going out for a picnic or shopping" \caphi{t. a l 3 a}\footnote{Some speakers in the North of Palestine pronounce the feminine singular suffix morpheme that is preceded by the Alveolar ejective fricative [s.] as [e]}.\\
+%[e] elsewhere.
+
+%On the other hand, those who live in the south of Palestine, in areas such as, Hebron and Bethlehem, %pronounce the feminine singular suffix morpheme as [a] e.g. \foreignlanguage{arabic}{بسَّة} "cat"  
+%\caphi{b i s s a}, \foreignlanguage{arabic}{معلمة} "teacher"
+%\caphi{m 3 a l m a}, and \foreignlanguage{arabic}{بتَّة} "single item"
+%\caphi{b a t t a}.
+
+
+\paragraph{Complex Plural Forms}
+Besides the common use of broken plural (templatic plural) in DA, we encountered cases of {\it blocked} plurals where a typical sound plural or templatic plural is not generated because another word form is used in its place \citep{aronoff1976word}. One example from Ramadin, is the plural form  of 
+ the word
+\foreignlanguage{arabic}{عَيِّل}
+{\it {\AYN}ay{\SHADDA}il} 
+\caphi{3~a~y~y~i~l} `child [lit. dependent]', which is blocked by the word form \foreignlanguage{arabic}{ضْعُوف} 
+{\it D.{\AYN}uwf} 
+\caphi{dh.~3~uu~f} `children [lit. weaklings]'.
+%imilar plural words that do not have a singular form were widely used among PAL speakers from the different areas of the West Bank. The table below clearly demonstrates some of the examples used in PAL. 
+
+
+
+\subsection*{Syntax}
+
+Previous research on Arabic dialects reveals that the syntactic differences between these dialects
+are considered to be minor compared to the morphological ones \citep{Brustad:2000:syntax}. 
+%
+%In line with previous findings, single negation with the negative particle \foreignlanguage{arabic}{ما} "not" coupled with or without negation enclitic \foreignlanguage{arabic}{ش} can be found in PAL . For example, \foreignlanguage{arabic}{ما أكلت} and \foreignlanguage{arabic}{ما أكلتش} "I did not eat."
+%
+One particular challenging phenomenon we encountered is a class of nouns used in adjectival constructions, but violating noun-adjective agreement rules, which involve gender, number and rationality \citep{Alkuhlani:2011:corpus}.  For instance, the word \foreignlanguage{arabic}{خِيخَة}
+{\it xiyxa{\TAMARBUTA}} \caphi{kh~ii~kh~a} `weak/lame' does not typically agree with the nouns it modifies unlike a normal adjective such \foreignlanguage{arabic}{كْبِير}
+{\it k.biyr} \caphi{k b ii r} `old [human]/large [nonhuman]'.  
+So, the words
+\foreignlanguage{arabic}{سِيَّارَة}
+{\it siy{\SHADDA}aAra{\TAMARBUTA}} `car [f.s.]', 
+\foreignlanguage{arabic}{عُرُس} {\it {\AYN}urus} `wedding [m.s.]', 
+and \foreignlanguage{arabic}{نَاس} {\it naAs} `people [m.p]' can all be modified by \foreignlanguage{arabic}{خِيخَة}
+{\it xiyxa{\TAMARBUTA}}; however, they need three different forms of \foreignlanguage{arabic}{كْبِير}
+{\it k.biyr}: 
+\foreignlanguage{arabic}{كْبِيرِة}
+{\it k.biyri{\TAMARBUTA}},
+\foreignlanguage{arabic}{كْبِير}
+{\it k.biyr}, and
+\foreignlanguage{arabic}{كْبَار}
+{\it k.baAr}, respectively.
+%
+We mark the POS of such nominals as ADJ/NOUN in our lexicon, as it is a class that deserves further study.
+
+
+%\citet{harley2011compounding} notes that a compound is a word-sized unit that is composed of two or more Roots. The meaning of a compound is usually compositional, i.e., predictable and the parts contribute to the whole. For example, the compound “popcorn” is a kind of corn which pops \citep{fabb2017compounding}. On the other hand, they can be non-compositional. For example, the meaning of the compound “watershed” has noting to do with the meanings of “water” and “shed” in isolation. Maknuune lexicon is very rich with both compositional and non-compositional compounds (CC and NC respectively). Examples for CC's include  \foreignlanguage{arabic}{جواز سفر} "passport" \caphi{J a w aa z \# s a f a r}, \foreignlanguage{arabic}{فقر دم}  "anemia" \caphi{f a q i r \# d a m m}. As for NC's, the word \foreignlanguage{arabic}{بيت} combines with many words to create new meanings. The table below summarizes some of the compounds found in Maknuune lexicon.
+
+%
+%\citet{borer2013structuring} maintains that categorial exocentricity simply means that the compound is not %a sub-kind of its head and therefore its overall category may differ from those of its constituents. As it %can be shown in the Arabic examples below in A, the resulting two NC's whose both of their categories are %nouns were made of two imperative verbs that combined together \foreignlanguage{arabic}{عص مص} a 
+%and  \foreignlanguage{arabic}{قرمز ونقِّي}.
+%
+%%\ag
+%3 u s. s. \# 3 m u s. s.\\
+%Squeeze (Imp.V.2MS)   lick(Imp. V.2MS)\\
+%%\glt
+%'a type of ice-cream'.\\
+%%\bg
+%g a r m i z \# w u n a g g i\\
+%squat(Imp. V.2MS)    and.choose (Imp. V.2MS)\\
+%%\glt
+%'second-hand clothing market'. 
+%
+%It must be noted that exocentric compounds can never be  found in Modern Standard Arabic, and rarely found in Dialectal Arabic as in the examples above. One might notice that the examples tend to be fixed and they never undergo pluralization at all.
+
+%\subsection{Semantics, Pragmatics, and Collocations}
+\subsection*{Figures of Speech and Multiword Expressions}
+
+PAL has a rich culture of figures of speech and multiword expressions (compounds, collocations, etc.) that has not been well documented. We highlight some phenomena that we  cover in Maknuune.
+
+\paragraph{Collocations}
+As part of working on Maknuune, we encountered numeorus collocations (words that tend to co-occur with certain words more often than they do  with others). For example, the verbs used for trimming off the tough ends of some vegetables vary based on the vegetable:
+%\foreignlanguage{arabic}{يقمِّع} 
+%\caphi{y~Q~a~m~m~i~3} `trim okra', 
+%\foreignlanguage{arabic}{يقرِّم}
+%\caphi{y~q~a~r~r~i~m} `trim green beans',
+%\foreignlanguage{arabic}{يعكِّب}  
+%\caphi{y~3~a~k~k~i~b} 'dethorn artichoke', 
+%and \foreignlanguage{arabic}{يطَرْطِف} 
+%\caphi{y~t.~a~r~t.~i~f} 'cut the blossom ends of the maize stalks'.
+\foreignlanguage{arabic}{يْقَمِّع بَامْيِا} 
+\caphi{y~Q~a~m~m~i~3 \# b~aa~m~y~e} `trim off the tough ends of okra', \foreignlanguage{arabic}{يْقَرِّم فَاصَولْيَا}
+\caphi{y~q~a~r~r~i~m \# f~aa~s.~uu~l~y~a} `trim off the tough ends of green beans', \foreignlanguage{arabic}{يْعَكِّب عَكُّوب}
+\caphi{y~3~a~k~k~i~b \# 3~a~k~k~uu~b} `remove the thorns from artichoke (Gundelia)', and  \foreignlanguage{arabic}{يْطَرْطِف ذُرَة} 
+\caphi{y~t.~a~r~t.~i~f \# D~u~r~a} `cut the blossom ends of the maize stalks'.
+
+
+\paragraph{Compounds}
+We encountered many compositional and non-compositional compounds. Examples include  \foreignlanguage{arabic}{جَوَاز سَفَر} 
+{\it jawaAz safar}
+\caphi{J a w aa z \# s~a~f~a~r} `[lit. permission-of-travel, passport]', which is also used in MSA. Some words appear in many compounds with a wide range of meaning, e.g.,
+%\foreignlanguage{arabic}{فقر دم}  "anemia" \caphi{f a q i r \# d a m m}. As for NC's,
+the word \foreignlanguage{arabic}{بَيت} {\it bayt} `[lit. house]' appears in compounds referring to celebrations, funerals, bathrooms, and whether or not a family has children (see the examples in  Table~\ref{tab:phrases}).
+
+\paragraph{Synecdoches}
+It has  been widely observed that PAL speakers use synecdoches\footnote{A figure of speech in which a term for a part of something is used to refer to the whole, or vice versa.} in their dialects \citep{seto1999distinguishing}.
+%Synecdoche, which is  \footnote{\citep{lakoff2008metaphors} also include synecdoche within the term metonymy.}. 
+Examples include the use of \foreignlanguage{arabic}{كَوم لَحِم} \caphi{k oo m \# l a 7 i m} `[lit. a pile of meat]', and \foreignlanguage{arabic}{كَبَابِيش}  \caphi{k~a~b~aa~b~ii sh} `[lit. plural of hair]' to mean `children'.
+
+%On the other hand, the terms \foreignlanguage{arabic}{ضلع إعوج}  "lit:crooked rib" \caphi{D. i l i 3 \# 2 i 3 w a J},  \foreignlanguage{arabic}{أربع وعشرين ضلع}  "24 ribs" \caphi{2 a r b a 3 a \# w u 3 i sh r ii n \# D. i l i 3}  and \foreignlanguage{arabic}{ضلع قاصر} "lit:a juvenile rib" \caphi{D. i l i 3 \# Q aa s. i r} all mean "woman".
+
+\paragraph{Euphemisms}
+PAL speakers use many euphemistic expressions. For example, in some villages 
+in Nablus, the expression \foreignlanguage{arabic}{يَوم تْهَنَّى} 
+\caphi{y~oo~m~\# t h a n n a} `[lit. the day he felt happy]' to mean `the day he passed away'. 
+In other areas in the West Bank, 
+the phrase \foreignlanguage{arabic}{عَينُه كَرِيمِة} 
+\caphi{3~ee~n~o~\# k~a~r~ii~m~e}
+`[lit. his eye is generous]'
+to mean `one-eyed'; and the phrase
+\foreignlanguage{arabic}{بَيت خَالْتِي}
+\caphi{b~ee~t~\# kh~aa~l~t~i}
+`[lit. my aunt's house]' means 'prison'.
+%As for the people in Hebreon, some of them say \foreignlanguage{arabic}{يطيِّر مي} y t. a y y i r \# m a. y y "lit: spray water, fig: go to the bathroom".
+
+%We specifically targeted collecting many of these kinds of constructions and included them in Maknuune.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Methodology}
+\addcontentsline{toc}{section}{\protect\numberline{}Methodology}%
+\label{method}
+In this section, we discuss the methodology  we adopted in data collection for Maknuune, as well as the guidelines we followed for creating the lexicon entries.
+
+\subsection*{Data Sources}
+The current work spans over five years of effort, and a large number of volunteering informants, linguistics students, and citizen linguists (over 130 people).
+%The first author and last four authors...
+The data was collected from many different sources.
+
+First are \textbf{interviews} with (mostly but not entirely) elderly people  who live in rural areas such as villages and towns or in refugee camps in the West Bank.
+%
+The researchers went to the field and met with several people. 
+They attended several social gatherings and participated in different events, e.g. weddings, funerals, field harvests, traditional cooking sessions, sewing, etc. They asked the language users several questions pertaining to the following themes: weddings, funerals, occupations, illnesses, cooking traditional dishes, plants, animals, myths, games, weather terms, tools and utensils, etc. They were particularly interested in documenting terms and expressions that are used mainly by the old generation. 
+
+Secondly, to achieve the needed balance in the lexicon, the researchers consulted an in-house \textbf{balanced corpus}, that contains $\sim$40,000 words. The corpus comprises data that was transcribed from several recorded conversations that revolve around the same themes as above, written chats and texts, and some internet material (both written and spoken). Common words including verbs, adjectives, adverbs, and function words (e.g., prepositions, conjunctions, particles) were taken from the balanced corpus. At a later stage in the development of Maknuune, we consulted with the Curras Corpus \citep{Jarrar:2016:curras} to identify additional missing lemmas, with limited yield. We compare to Curras in terms of coverage in  Section~\ref{eval}. All of the above was also supplemented by methodical rounds of well-formedness checking to improve consistency across all fields, i.e., diacritization, transcription, root validity, etc.
+
+Finally, in addition to the previous two methods, the researchers employed their \textbf{linguistic intuition} skills, knowledge of Palestinian Arabic (as native speakers) and the knowledge of the language users to provide additional word classes and multiword expressions that are associated with the existing lemmas.
+%Note that only words that were considered by the researchers to be a representative sample of PAL (as a whole, i.e., all of the sub-dialects) were used in the lexicon, and this includes MSA lemmas (or pronunciations or meanings thereof) that would possibly not qualify as representative in other varieties of Arabic or even in some PAL sub-dialects.
+
+It should be noted that whether an MSA lemma cognate of a PAL lemma (with similar or exact pronunciation, or meaning) exists was not considered a factor in including the PAL lemma in the lexicon.  We focused on creating a  representative sample of PAL including all its sub-dialects.
+
+
+\begin{table*}[t!]
+    \centering
+\includegraphics[width=\linewidth]{examples.pdf}
+    \caption{Eight entries from {\maknuune} that share the same root, and are paired with four distinct lemmas.}
+    \label{tab:tf7}
+\end{table*}
+
+\subsection*{Lexical Entries}
+
+
+Each entry in the Maknuune lexicon consists of six required and three optional fields.
+The six required fields are the \textbf{Root}, \textbf{Lemma}, \textbf{Form}, \textbf{Transcription},  \textbf{POS \& Features}, and \textbf{English Gloss}. The optional fields are the \textbf{MSA Gloss}, \textbf{Example} and \textbf{Notes}.
+Figure~\ref{tab:tf7} presents an example of a number of entries coming from the same root.
+
+%\subsection{Manual Annotation}
+%\subsubsection{Root}
+
+%The root is an abstraction of all derivations. Arabic morphologists classified roots based on the number of their radicals into triliteral (three radicals), quadriliteral (four radicals) and quintiliteral (five radicals) roots. Templatic morphemes that are equally needed to create a word templatic stem come in three types: roots, patterns and vocalisms. In terms of the root morpheme, it is a sequence of three, four, or very rarely five consonants that come in a fixed order. \\
+
+%1a2a3 + k.t.b = katab\\
+%1aa2i3+k.t.b=kaatib\\
+%1a22a3 + k.t.b = kattab = kat~ab\\
+%ista12a3 +k.t.b = istaktab\\
+%1u22aa3+k.t.b=kuttab\\
+%ma12a3+k.t.b =maktab\\
+%ma12a3a+k.t.b =maktaba\\
+
+%The root signifies some abstract meaning or notion that is shared by all the derivations. For example, The root \foreignlanguage{arabic}{ك.ت.ب}has many words associated with it and that share similar meanings to the root
+%\foreignlanguage{arabic}{كَتَب} "write.3rd.Masc.SG) k a t a b, \foreignlanguage{arabic}{كَتَّب} "make sb write.causative.3rd.Masc.SG) k a t t a b, \foreignlanguage{arabic}{كُتُب} "books" k u t u b, \foreignlanguage{arabic}{مكتب} "office" m a k t a b, \foreignlanguage{arabic}{مكتبة} "library" m a k t a b e, \foreignlanguage{arabic}{كُتَّاب} "an old school where kids in the past used to go to in order to learn reading, writing and reciting Qura'an", \foreignlanguage{arabic}{كاتب} "write to one another or carry on a correspondence"
+
+\subsubsection*{Root, Lemma, and Form}
+The \textbf{Root}, \textbf{Lemma} and \textbf{Form} represent three degrees of morphological abstraction.
+The \textbf{root} in Arabic in general is a templatic morpheme that interdigitates with a pattern or template to form a word stem that can then be inflected further. Roots are very abstract representations that broadly define the morphological family a word belongs to at the derivational and inflectional level. 
+%
+\textbf{Lemmas} on the other hand are abstractions of the inflectional space that is limited by variations in the morphological features of person, gender, number, aspect, etc. Lemmas are the central entries of the lexicon. 
+\textbf{Forms} are base words (i.e., without clitics) that are inflected in a specific way. 
+We follow the same general guidelines of determining lemmas as used in large Arabic morphological analyzers \citep{Graff:2009:standard,Habash:2012:morphological,Khalifa:2017:morphological}. There are of course some constructions that have grammaticalized into new lemmas, e.g., 
+\foreignlanguage{arabic}{عَشَان} 
+{\it {\AYN}a{\SHIN}aAn} can be treated as the noun  
+\foreignlanguage{arabic}{شَان}
+{\it {\SHIN}aAn} `situation;status' with a proclitic, or the subordinating conjunction meaning `because'.
+
+For nouns and adjectives, we provide the lemma in the masculine singular form, unless it is a feminine form that does not vary in gender, in which case it is provided in the feminine singular. Very infrequently, some nouns only appear in plural form, which become their lemma, e.g. \foreignlanguage{arabic}{أَوَاعِي} {\it {\AHAMZAUP}awaA{\AYN}iy} \caphi{2~a~w~aa~3~i} `clothes'.  We do not list the sound plural and sound feminine inflections of nouns and adjectives. However, broken plurals and templatic feminine forms are provided and linked through the same lemma as the singular form.
+
+For verbs, we provide the lemmas in the third masculine singular perfective form as is normally done in Arabic lexicography. We provide three forms linked to the lemma: the third masculine singular perfective, the third masculine singular imperfective, and the second person masculine imperative (command) forms.  These are provided for completeness to identify the basic verbal inflectional paradigm (albeit, not completely).
+
+These three representations are provided in Arabic script.
+Since PAL does not have an official standard orthography, we intentionally decided to follow the Conventional Orthography for Dialectal Arabic (CODA*) \citep{Habash:2018:unified}. In addition to being used in developing Curras \citep{Jarrar:2016:curras}, CODA* has been adopted  by a website for teaching PAL to non-native speakers.\footnote{\url{https://www.palestinianarabic.com/}}
+%\todo{if we have space... refer to Figure 1}
+
+\begin{table}[t!]
+    \centering
+    \includegraphics[width=0.6\linewidth]{caphi_table-v2.pdf}
+    \caption{The CAPHI++ symbols set and its expanded CAPHI symbols, with examples.}
+    \label{tab:caphiplus}
+\end{table}
+
+\subsubsection*{Transcription with CAPHI++}
+One of CODA*'s limitations is that it abstracts over some of the phonological variations. As such, we follow the suggestions by \citep{Habash:2018:unified} to use a phonological representation, CAPHI, to indicate the specific phonology of the entries.  CAPHI, which stands for Camel Phonetic Inventory is inspired by the  International Phonetic Alphabet (IPA)  and Arpabet \citep{Shoup:1980:phonological}, and is designed to only use characters directly accessible on the common keyboard to ease the job of annotators.
+
+Owing to the phonological variations that are found in PAL, we extended CAPHI's symbol set with \textit{cover phonemes} that represent a number of possible interchangeable phones.  We call our extended set CAPHI++.  Table~\ref{tab:caphiplus} presents the new 9 symbols we introduced. All of these symbols are to be presented in upper case, while normal CAPHI symbols are in lower case. The new CAPHI++ symbols represent specific sets of mostly two variants in common use in different PAL sub-dialects.
+For example, instead of including four entries for the word \foreignlanguage{arabic}{قَلَم} {\it qalam} 
+(\caphi{q~a~l~a~m}, \caphi{k~a~l~a~m},  \caphi{2~a~l~a~m}, 
+\caphi{g~a~l~a~m}),
+we only provide one form (\caphi{Q~a~l~a~m}).
+Exceptional usages that do not conform to the specific generalizations of the CAPHI++ cover symbols are listed independently, e.g., a second entry for the above example is provided for the Beit Fajjar pronunciation of \caphi{tsh~a~l~a~m}.
+
+We acknowledge that the transcriptions provided may not represent the full breadth of PAL sub-dialects.  We make our resource open so that additional forms and variants can be added in the future, as needed.
+
+\subsubsection*{Phonological Transcription in this Book}
+While CAPHI++ is used in the introduction of this book and the development of the lexicon on the Google Sheets interface for a smoother annotator experience, we use IPA in this book to represent the phonological transcriptions. To accommodate the CAPHI++ extensions, we introduce parallel IPA++ additions (see Table \ref{tab:caphiplus}).
+
+%However, it is the opinion of the lexicographers working on Maknuune that most of the time, the different pronunciations do not conflict with the CODA form (and to a lesser extent diacritization) which is rather robust to PAL sub-dialect phonological variation.
+
+%The word \foreignlanguage{arabic}{قلم} "pen" Q a l a m can be pronounced as q a l a m, k a l a m, 2 a l a m, g a l a m, \footnote{the word \caphi{tsh a l a m}, which means pen, is used in Bayt Fajar} \caphi{tsh a l a m}. The table below clearly illustrates the symbols employed in CAPHI++.
+%It should be noted that there are some exceptions that do not conform to the the generalizations captured in the new symbols syggested in CAPHI++. For example, in Beit Fajjar,  a Palestinian town located 8 kilometers south of Bethlehem in the West Bank, pronounce the word \foreignlanguage{arabic}{قهوة} "coffee" Q a h w e as tsh h ee w a
+%Moreover, some words have only one or two pronunciations; such as, \foreignlanguage{arabic}{عقال} "Agal" 3 g aa l, \foreignlanguage{arabic}{نيقة} "fussy" n ii 2 a , and \foreignlanguage{arabic}{قندرة} "shoe" qIIk u n d a r a. It is worth mentioning that the symbol II was used to give two or three possible pronunciations of the same word as indicated in the example \foreignlanguage{arabic}{قندرة} above.
+%Certain words that have the same meaning but were spelled differently were written in separate lexical entries with different roots; such as, \foreignlanguage{arabic}{أنطى} "give" 2 a n t. a and \foreignlanguage{arabic}{أعطى}  "give" 2 a 3 t. a, \foreignlanguage{arabic}{نيرة} "dinar" n ee r a and \foreignlanguage{arabic}{ليرة} "dinar" l ee r a, and \foreignlanguage{arabic}{فنجال} "cup" f i n J aa l and \foreignlanguage{arabic}{فنجان} "cup" f i n J aa n.
+
+\subsubsection*{POS and Features}
+
+The analysis cell in every entry indicates the POS and features of the word form. 
+We use 35 POS tags based on a combination of previously used POS tagsets in Arabic NLP \citep{Graff:2009:standard,Pasha:2014:madamira,Khalifa:2018:morphologically}.  Our closest relative is the tagset used by \citep{Khalifa:2018:morphologically} for work on Emirtai Arabic annotation. See the full list of POS tags in Table~\ref{tab:pos} in Appendix~\ref{pos-mapping}. %\todo{@shahd table needs cleaning; check comparison with Khalifa's Camel POS}  
+However, we  extend their POS list with three tags: ADJ/NOUN (for adjectives with exceptional agreement), NOUN\_ACT (active participle deverbal noun), and NOUN\_PASS (passive participle deverbal noun).
+
+For features, we use MS (masculine singular), FS (feminine singular), and P (plural) for nominals, % \todo{or NOUN and ADJ only ? what about NOUN\_ACT/PASS others..}
+and P (perfective), I (imperfective) and C (command) for third masculine singular verb forms only.
+
+
+%The annotators provided all the possible word forms that are associated with the same root. The table below shows that the root \foreignlanguage{arabic}{ح}.\foreignlanguage{arabic}{ف}.\foreignlanguage{arabic}{ت}
+ 
+%has  several  lexical entries ; such as, unit noun, collective noun, verb and phrase. 
+
+%In Figure~\ref{fig:tf7}, we see...
+%Figure~\ref{fig:tf7}(a) is an example of...
+
+%It must be noted that the annotators provided the readers with the irregular feminine and broken plurals of the nouns and adjectives. The table below shows some examples.
+
+%\begin{figure*}[t!]
+%    \centering
+%\includegraphics[width=0.99\linewidth]{Irregular Fem and %Plurals.jpg}
+%    \caption{Irregular Femminine and Broken Plurals}
+%    \label{fig:tf7}
+%\end{figure*}
+
+\subsubsection*{Phrases} 
+In addition to basic word forms, we overload the use of the form cells to list phrases (multiword expressions, collocations, and figures of speech) that are paired with the lemma. In such cases, the POS:Features cell is given the POS of the lemma, with the extension \textbf{PHRASE}, e.g., line (d) in Table~\ref{tab:tf7}, and 
+%. {\maknuune} contains a large number of phrasal entries. For some additional examples associated with a single lemma, see 
+Table~\ref{tab:phrases}.
+
+\begin{table*}[th!]
+    \centering
+\includegraphics[width=\linewidth]{phrases.pdf}
+    \caption{Examples of NC compounds in Maknuune for the lemma \foreignlanguage{arabic}{بَيت} `house'.}
+    \label{tab:phrases}
+\end{table*}
+ 
+
+
+
+\subsubsection*{Glosses, Examples and Notes}
+We provided the English gloss equivalents of all the PAL words. The MSA gloss was provided for about a third of the entries at the time of writing. 
+In cases where no single word in MSA or English can encode a culturally specific concept, the annotators translated the whole situation/concept. 
+For example, in Ramadin, there are two words for `baby camel' depending on its age: \foreignlanguage{arabic}{ذَلُول} 
+{\it {\DHA}aluwl} \caphi{dh~a~l~uu~l}, `barely a few days old'  and
+\foreignlanguage{arabic}{حْوَيِّر}
+{\it H.way{\SHADDA}ir} \caphi{7~w~a~y~y~i~r} `around 14-15 months old'. 
+Another complex example is the word \foreignlanguage{arabic}{تَلْجِيم} {\it tal.jiym} \caphi{t a l J ii m} `[lit. harnessing or bridling]' which can refer also to `reciting some verses from the Quran (Surat Al-Takweer, Ayat Al-Kursi or Surat Al-Hashr) on a razor or a thread and closing the razor or tying the thread and leaving them aside until a lost or missing riding animal has returned home.' 
+%the word \foreignlanguage{arabic}{يبنِّق} "loosen the garment by sewing extra fabric to its sides" \caphi{y b a n n i q}, and the word \foreignlanguage{arabic}{يتبعَّر} "pick olives after the main harvest"  \caphi{y i t b a 3 3 a r}. 
+
+Finally, we provide usage examples for some entries, as well as grammatical or collection notes.  Notes vary in type from {\it Collective Noun} and {\it Collected near Nablus}, to {\it Vulgar}.
+
+%The simple words had equivalents in both MSA and English as can be seen in the table below.
+
+%\begin{figure*}[t!]
+%    \centering
+%\includegraphics[width=0.99\linewidth]{Glosses.jpg}
+%    \caption{Glosses}
+%    \label{fig:tf7}
+%\end{figure*}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section*{Coverage Evaluation}
+\addcontentsline{toc}{section}{\protect\numberline{}Coverage Evaluation}%
+\label{eval}
+We approximate the coverage of our lexicon by comparing it with the {\curras} corpus \citep{Jarrar:2016:curras}, the largest resource available for PAL.\footnote{\citet{alhaff-EtAl:2022:LREC} describe a revised version of that corpus, but it was not made available at the time of writing.} Since \curras is a corpus and our resource is a lexicon, the analysis is carried out in such a way to account for that difference. 
+%
+We  present next some high-level corpus statistics and then a detailed comparison between \maknuune and \curras.
+%
+Then, we  provide some comparison between \maknuune and the lexicons of two morphological analyzers for MSA and EGY.
+
+\begin{table}[t]
+    \centering
+    \includegraphics[width=0.6\linewidth]{maknuune_stats.pdf}
+    \caption{POS type and entry  statistics in \maknuune.}
+    \label{fig:stats-maknuune}
+\end{table}
+
+\begin{table}[t]
+    \centering
+\includegraphics[width=0.6\linewidth]{maknuune_curras_comparison-v3.pdf}
+    \caption{Side-by-side view of the statistics of both \maknuune and the lexicon extracted from \curras.}
+    \label{fig:stats-comp}
+\end{table}
+
+\subsection*{Maknuune \& Curras Statistics}
+\paragraph{Maknuune POS Types}
+Table \ref{fig:stats-maknuune} shows some basic statistics about \maknuune, dividing entries across four basic POS types (see Table~\ref{tab:pos}).
+ %
+\maknuune has about three times more verb entries than verb lemmas, reflecting the fact that almost each verb appears in all three aspects (perfective, imperfective, and command) in third person masculine singular form. Similarly for nominals (nouns, adjectives, etc.), the ratio of 1.2 forms per lemma reflects the inclusion of plural entries for many nominals. % which can take a plural form.
+Phrasal entries account for 10\% of all Maknuune entries, and close to three quarters of them are associated with nominals (63\% of all lemmas). 
+
+\paragraph{The Curras Lexicon}
+
+In order to compare \maknuune with \curras, we  extract a lexicon, henceforth Curras Lexicon, out of the Curras corpus by uniquing its entries based on lemma, inflected form, POS, and grammatical features (for \curras, aspect, person, gender, and number). 
+%This way, we obtain the \curras lexicon, the numbers of which are contrasted against those of 
+We compare the Curras Lexicon to \maknuune in Table~\ref{fig:stats-comp}.
+
+Firstly, Curras does not include  roots; and although it is a corpus, it does not identify phrases in the way Maknuune does. As such, we do not compare them in those terms in Table~\ref{fig:stats-comp}.
+%and technically, since \curras is a corpus, then quoting the number of phrases in it is not really useful, which explains why these numbers are missing from Table~\ref{fig:stats-comp}. 
+%Each phrase is represented by one or more lemmas which are annotated in-context for POS, explaining the difference between the total number phrase entries and the number of unique phrase entries.
+
+Secondly, by virtue of being a lexicon, \maknuune possesses more unique lemmas, weighing in at 17,369 lemmas taking POS into account (lemma:POS), while the total number of inflected forms is at 32,759, both of which are about 50\% more than in the Curras Lexicon. This clearly showcases \maknuune's richness in terms that go beyond the day-to-day language that one sees frequently in corpora like \curras. In contrast, \curras being a corpus, its extracted lexicon showcases a greater inflectional coverage with 224 unique word analyses as opposed to 76 for \maknuune. 
+
+%Furthermore, the difference between the unique number of lemma:POS:features 3-tuples and unique number of inflected forms reflects the inflectional and derivational syncretism in PAL.
+Finally, as inferable from the difference between the number of unique lemmas and lemma:POS, 548 lemmas are associated to more than one POS in \maknuune.
+
+\subsection*{Corpus Coverage Analysis}
+\label{corpus-coverage-analysis}
+In the interest of estimating how well our lexicon would fare with real-world data, we perform an analysis between the \curras and \maknuune lemmas, to see how many of the \curras lemmas \maknuune actually covers. From an initial investigation, we note that there are numerous minor differences that need to be normalized to ensure a more meaningful evaluation.
+As such, we first pre-process all lemmas (in both lexicons) by stripping the \foreignlanguage{arabic}{سكون} {\it sukun} diacritic, stripping all the \foreignlanguage{arabic}{فتحة} diacritics that appear before a \foreignlanguage{arabic}{ا}~\textit{A},
+%all diacritics at the end of the lemmas,
+converting the \foreignlanguage{arabic}{همزة وصل} \foreignlanguage{arabic}{ٱ}~\textit{Ä} to \foreignlanguage{arabic}{ا}~\textit{A}, and stripping the \foreignlanguage{arabic}{كسرة} (\textit{i}) and \foreignlanguage{arabic}{فتحة} (\textit{a}) diacritics if they appear before \foreignlanguage{arabic}{ة}~\textit{\TAMARBUTA}. We then compare all the annotated lemma:POSType
+%\footnote{Occurence of a lemma which has a specific POS type (see mapping available in Appendix \ref{}.} 
+in \curras (56,004 tokens and 8,315 normalized types) to the lemmas in Maknuune.
+
+We exclude 12,673 (23\%) of the tokens pertaining to punctuation, digits and proper noun POS, none of which were especially targeted by \maknuune. Of the remaining 43,331 entries, 49\% have exact match in \maknuune. We sample 10\% of the unique entries with no exact match (433 types and 1,965 tokens), and manually annotate them for their mismatch class.  We found that 74\% of all the sampled types (80\% in tokens) are actually present in \maknuune, but with slight differences in orthography mainly in the presence or absence of diacritics but also some spelling conventions. For about 20\% of sampled types (17\% in tokens), the lemma type is not one that we targeted such as foreign words and proper nouns that are differently labeled in \curras, or MSA words. Finally, 6\% of sampled types (3\% in tokens) are entries that are admittedly missing in \maknuune and can be added.
+
+This suggests that we have very good coverage although the annotation errors and differences make it less obvious to see. A simple projected estimate assuming that our 10\% sample is representative would suggest that \maknuune's coverage of \curras' lexical terms (other than proper nouns and punctuation) is close to 94\% (97\% in token space); however a full detailed classification would be needed to confirm this projection. 
+
+\subsection*{Overlap with MSA and EGY}
+In this section we conduct an evaluation similar to the one carried out in Section \ref{corpus-coverage-analysis} but with an MSA lexicon (Calima$_{MSA}$), and an Egyptian Arabic lexicon (Calima$_{EGY}$).\footnote{For MSA, we compared with the \texttt{calima-msa-s31\_0.4.2.utf8.db} version \citep{Taji:2018:arabic-morphological} based on SAMA \citep{Graff:2009:standard} and for EGY we only compared to the {\tt calima-egy-c044\_0.2.0.utf8.db} based on \citep{Habash:2012:morphological}. For EGY, only {\tt CALIMA} analyses entries are selected.}
+%
+The analysis reveals that 44\% of \maknuune overlaps with Calima$_{MSA}$ at the lemma:POSType level (63\% if all entries are dediacritized),\footnote{The \textit{shadda} ({\SHADDA}) is not included in dediacritization.}
+and that 49\% of \maknuune overlaps similarly with Calima$_{EGY}$ (75\% dediacritized). 
+%
+Taking into account that {\maknuune} spelling follows the CODA* guidelines,
+the analysis suggests that the 37\% of {\maknuune}  lemma:POSTypes, which do not exist in the MSA lexicon we used, are heavily dialectal. The overlap with EGY is predictably higher, and the 25\% of Maknuune lemma:POSTypes (dediacritized) not existing in EGY highlights the differences between the two dialects despite their many similarities.
+
+\subsection*{Observations on Lexical Richness and Diversity}
+The quantitative analyses we presented above allow us to see the big picture in terms of lexical richness and diversity in {\maknuune} and its complementarity to existing resources. However, we acknowledge that such an approach misses a lot of details that are collapsed or lost when ignoring subtle differences in semantics, phonology and morphology.
+
+We first point at homonyms showing semantic changes and spread, such as  \foreignlanguage{arabic}{آوَى} 
+/2 aa w a/ which is  `thread a needle' in PAL and ‘shelter sb’ in both MSA and PAL,
+% \foreignlanguage{arabic}{جرجير} \caphi{J a r J ii r} which means ‘black olives that have been collected from the ground’ in some Palestinian villages and ‘arugula (rocket)’ in MSA, 
+\foreignlanguage{arabic}{بَطّ} \caphi{b a t. t.} which means `very small olives that people find hard to pick' in some villages in Palestine and `ducks' in both MSA and PAL, and \foreignlanguage{arabic}{آخرة}
+\caphi{2 aa kh r e} which means `desserts' in Nablus and `the Day of the Judgment' in both MSA and PAL, albeit with a different pronunciation. Clearly, additional entries are needed to mark these difference.
+
+Furthermore, the majority of the entries in \maknuune are actually pronounced differently from MSA even if spelled the same without diacritics and thus warrant entries of their own, with clear phonological specifications.
+
+Finally, if we consider morphology (which is not modeled here per se), many PAL lemmas that have MSA lemma cognates are actually inflected differently, e.g.,
+\foreignlanguage{arabic}{مَدّ}
+{\it mad{\SHADDA}} `extend;stretch'
+(in PAL and MSA),
+has different inflections for some parts of the paradigm: the 2nd person masculine plural is
+\foreignlanguage{arabic}{مَدَّيتوا} {\it mad{\SHADDA}aytuwA} in PAL and
+\foreignlanguage{arabic}{مَدَدْتُم} {\it madad.tum} in MSA.
+Hence, each lemma in our lexicon heads a morphological paradigm which differs from its MSA counterpart.
+
+\newpage
+
+\section*{POS Type Mapping and Examples}
+\addcontentsline{toc}{section}{\protect\numberline{}POS Type Mapping and Examples}%
+\label{pos-mapping}
+
+\begin{table}[h!]
+    \centering
+\includegraphics[width=0.5\linewidth]{pos_table.pdf}
+    \caption{Mapping of part-of-speech (POS) types to POS tags used to annotate base words in Maknuune, and associated examples.}
+    \label{tab:pos}
+\end{table}
+

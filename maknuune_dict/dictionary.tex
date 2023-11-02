@@ -1,0 +1,332 @@
+\documentclass[11pt]{book}
+\usepackage{preamble}
+
+\newcommand\Cstar{CALIMA$_{Star}$}
+
+\newcommand{\caphi}[1]{{/{{\it #1}}/}}
+\usepackage{xspace}
+\newcommand{\curras}{{Curras}\xspace}
+\newcommand{\maknuune}{{Maknuune}\xspace}
+\input{macros.tex}
+
+\bibliography{camel-bib-v2,extra,maknuune-cite}
+
+\makeatletter
+\renewcommand{\@chapapp}{}% Not necessary...
+\newenvironment{chapquote}[2][2em]
+  {\setlength{\@tempdima}{#1}%
+   \def\chapquote@author{#2}%
+   \parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+   \itshape}
+  {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
+\makeatother
+
+\fancypagestyle{logo}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}\fancyfoot[C]{\includegraphics[width=0.4\textwidth]{camel-lab-logo.png}}
+\fancyfoot[R]{{\normalfont\fontsize{15}{15}\selectfont \textbf{v1.0.4}}}}
+
+\begin{document}
+
+\setsansfont{Arial}
+
+\frontmatter %Use lowercase Roman numerals for page numbers
+
+%-----------------------------------------------------------
+% COVER PAGE
+%-----------------------------------------------------------
+
+\title{Maknuune}
+
+\begingroup
+\thispagestyle{logo}
+%\AddToShipoutPicture*{\put(-175,0){\transparent{0.5}\includegraphics[scale=1]{unnamed-4.jpg}}} % Image background
+\AddToShipoutPicture*{\put(-175,0){\includegraphics[scale=1]{maknuune-egg.png}}} % Image background
+\centering
+\vspace*{3cm}
+{\par\fontsize{35}{35}\textbf{MAKNUUNE}\\}
+\vspace{20pt}
+{\fontsize{45}{45}\foreignlanguage{arabic}{مكنونة} \\}
+\vspace*{1cm}
+{\par\normalfont\fontsize{30}{30}\selectfont A Large Open \\ Palestinian Lexicon} \\ % Book title
+\vspace{1mm}
+{\par\normalfont\fontsize{32}{32}\selectfont \foreignlanguage{arabic}{قاموس} \\ \foreignlanguage{arabic}{اللهجة العربية الفلسطينية} \\ \foreignlanguage{arabic}{المفتوح المصدر}} \\ % Book title
+\vspace*{2.5cm}
+{\normalfont\fontsize{18}{18}\selectfont \textbf{SHAHD DIBAS}}\par % Author name
+\vspace{1mm}
+{\normalfont\fontsize{20}{20}\selectfont \textbf{\foreignlanguage{arabic}{شهد دعباس}}}\par % Author name
+\endgroup
+
+%-----------------------------------------------------------
+% INSIDE COVER
+%-----------------------------------------------------------
+\newpage
+\thispagestyle{logo}
+
+{
+\centering
+\vspace*{2cm}
+{\par\fontsize{35}{35}\textbf{MAKNUUNE}\\}
+\vspace{20pt}
+{\fontsize{45}{45}\foreignlanguage{arabic}{مكنونة} \\}
+\vspace*{1cm}
+{\par\normalfont\fontsize{30}{30}\selectfont A Large Open \\ Palestinian Lexicon} \\ % Book title
+\vspace{1mm}
+{\par\normalfont\fontsize{32}{32}\selectfont \foreignlanguage{arabic}{قاموس} \\ \foreignlanguage{arabic}{اللهجة العربية الفلسطينية} \\ \foreignlanguage{arabic}{المفتوح المصدر}} \\ % Book title
+\vspace*{2cm}
+{\normalfont\fontsize{18}{18}\selectfont \textbf{SHAHD DIBAS}}\par % Author name
+\vspace{1mm}
+{\normalfont\fontsize{20}{20}\selectfont \textbf{\foreignlanguage{arabic}{شهد دعباس}}}\par % Author name
+
+\vspace{1cm}
+{\normalfont\fontsize{15}{15}\selectfont in collaboration with}\par
+\vspace{1mm}
+{\normalfont\fontsize{15}{15}\selectfont \foreignlanguage{arabic}{بالتعاون مع}}\par
+\vspace{1cm}
+}
+{
+{\normalfont\fontsize{12}{12}\selectfont \textbf{CHRISTIAN KHAIRALLAH}}
+\hspace{1.5cm} and \hspace{2cm}
+{\normalfont\fontsize{12}{12}\selectfont \textbf{NIZAR HABASH}}
+\par
+\hspace{2cm}
+{\normalfont\fontsize{12}{12}\selectfont \textbf{\foreignlanguage{arabic}{كريستيان خيرالله}}}
+\hspace{3.5cm}
+{\normalfont\fontsize{12}{12}\selectfont \textbf{\foreignlanguage{arabic}{و}}}
+\hspace{3.5cm}
+{\normalfont\fontsize{12}{12}\selectfont \textbf{\foreignlanguage{arabic}{نزار حبش}}}
+
+}
+
+%-----------------------------------------------------------
+% COPYRIGHT PAGE
+%-----------------------------------------------------------
+
+\newpage
+~\vfill
+\thispagestyle{empty}
+
+%\noindent Copyright \copyright\ 2014 Andrea Hidalgo\\ % Copyright notice
+
+\noindent \textbf{New York University Abu Dhabi}\\
+\noindent Abu Dhabi, United Arab Emirates\\
+
+\copyright\ \textsc{Shahd Dibas and CAMeL Lab at New York University Abu Dhabi, 2022}\\
+All rights reserved. The content in this work is licensed under a \href{https://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons Attribution-ShareAlike 4.0 International} license. \\
+
+\textbf{Website}\\
+\noindent \url{www.palestine-lexicon.org}\\ % URL
+
+\textbf{Citation}\\
+\href{https://arxiv.org/abs/2210.12985}{Shahd, Dibas, Christian Khairallah, Nizar Habash, Omar Fayez Sadi, Tariq Sairafy, Karmel Sarabta, and Abrar Ardah. 2022. "Maknuune: A Large Open Palestinian Arabic Lexicon." In: \textit{Proceedings of the Workshop for Arabic Natural Language Processing (WANLP)}. Abu Dhabi, United Arab Emirates.} \\
+
+\noindent This work was done in collaboration with the \href{https://nyuad.nyu.edu/en/research/faculty-labs-and-projects/computational-approaches-to-modeling-language-lab.html}{Computational Approaches to Modeling Language Lab (CAMeL Lab)} at New York University Abu Dhabi.\\ % License information
+
+\noindent \textit{First release, December 2022} % Printing/edition date
+
+%-----------------------------------------------------------
+% ENDORSEMENTS
+%-----------------------------------------------------------
+
+\newpage
+\thispagestyle{empty}
+{\par\normalfont\fontsize{30}{30}\selectfont \textbf{Endorsements}} \\
+\vspace{2cm}
+
+\begin{chapquote}{\textbf{Prof. Noam Chomsky}, \textit{Massachusetts Institute of Technology (MIT)}}
+``The new Palestinian Arabic Lexicon [Maknuune] is a valuable contribution to the linguistic scholarship generally, and is especially welcome for the insights it provides into the rich cultural and social life of Palestine.''
+\end{chapquote}
+
+\vspace{5mm}
+
+\begin{chapquote}{\textbf{Prof. Hamid Dabashi}, \textit{Columbia University}}
+``The language a people speak is like the air they breathe, the food they eat, the life they live, the children they raise, the hope they invest in the future of their humanity. The timely and ambitious Maknuune Corpus is the sign of a trust rooted in a prolonged past and a heroically defended future. Collected mainly from the elderly Palestinians living in refugee camps, villages and towns, this dictionary is the living memory of a life happily and defiantly lived, and it is to preserve the Palestinian linguistic and cultural identity for the posterity. The Palestinian Arabic that this project seeks to record and preserve is as precious for our future as the very landscape they have spent generations defending against memoricide.''
+\end{chapquote}
+
+\vspace{5mm}
+
+\begin{chapquote}{\textbf{Prof.  Abdelkader Fassi Fehri}, \textit{Mohammed V University
+}}
+``Produced by a group of outstanding NLP Palestinian scholars from Oxford University, NYU Abu Dhabi, and UCES at UNRWA, Maknuune is a large open lexicon of significant varieties of the Palestinian Arabic dialect (PAL). Originally designed and motivated by the need to document and preserve the cultural heritage and unique identities of the various PAL sub-varieties (or typical elderly idiolects), it is open to expand and cover PAL’s evolution, not only as a living Arabic language variety within the context of Arabic pluriglossia, but also and chiefly as the tongue and voices of the Palestinian people, and their heroic combat for life and freedom. Moreover, it aims not only to provide a resource to support research and development in the specifics of this Arabic dialect in natural language processing (NLP), or more broadly comparative Arabic linguistics, but it also serves as an important pedagogical tool for learning PAL, help teaching PAL to Palestinian children in the diaspora, and to non-Arabic speakers.
+The Maknuune lexicon specifies a significant number of lexical entries in terms of roots, lemmas, and forms. Entries include Arabic diacritized orthography, phonological transcription, English and Standard Arabic glosses, associated phrases and collocations, broken plural and templatic feminine inflectional morphology, examples or notes on grammar, usage, or location of the collected entries, syntax and collocations, with expected expansions to cover more PAL sub-varieties, additional entries, richer annotations, and sufficiently specified phonological transcriptions to help in speech recognition, or morpho-lexical information for developing morphological analyzers or taggers.  
+I expect that Maknuune — as one of the largest open machine-readable dictionaries for PAL — will enjoy success, support, and interest from a large public of culture, linguistics, sociolinguistics, computation and NLP, comparative lexicology, pedagogy, and planning.''
+\end{chapquote}
+
+\vspace{5mm}
+\thispagestyle{empty}
+
+\begin{chapquote}{\textbf{Prof. Clive Holes}, \textit{University of Oxford
+}}
+``The language a people speak is like the air they breathe, the food they eat, the life they live, the children they raise, the hope they invest in the future of their humanity. The timely and ambitious Maknuune Corpus is the sign of a trust rooted in a prolonged past and a heroically defended future. Collected mainly from the elderly Palestinians living in refugee camps, villages and towns, this dictionary is the living memory of a life happily and defiantly lived, and it is to preserve the Palestinian linguistic and cultural identity for the posterity. The Palestinian Arabic that this project seeks to record and preserve is as precious for our future as the very landscape they have spent generations defending against memoricide.''
+\end{chapquote}
+
+\vspace{5mm}
+
+\begin{chapquote}{\textbf{Prof. Ilan Pappe}, \textit{University of Exeter}}
+``Maknuune — the egg left for future hens to lay their eggs in the future — is a fitting name for this incredible project that will make sure that Palestinian culture in its widest possible definition, will light our way in the future. The ethnic cleansing, occupation and oppression perpetrated against the Palestinians, targeted also the Palestinian culture. Resistance and resilience defeated the attempt to culturicide Palestine and this lexicon is testimony to this incredible Palestinian endeavor and survival. Its width and depth will amaze any reader and it will become one of the most useful accessories for anyone's interest in Palestinian culture in the future. This is a project that commemorates forever the language of the people themselves and is an organic part of their identity, their past and future aspirations.''
+\end{chapquote}
+
+\vspace{5mm}
+
+\begin{chapquote}{\textbf{Dr. Walid Saif}, \textit{Palestinian poet, short-story writer, playwright and critic}}
+``Language is the most important vehicle of cultural heritage and identity, hence the significance of this linguistic project recording Palestinian Arabic. [This] lexicon is not just an inventory of independent entries, but rather a complex and dynamic network of concepts, ideas and values that reflects and helps construct [a] worldview as it feeds into social interactions. Thus, as a Palestinian linguist and writer, I enthusiastically endorse this project, and invite all concerned to contribute thereto.''
+
+\end{chapquote}
+
+%-----------------------------------------------------------
+% MAKNUUNE TEAM
+%-----------------------------------------------------------
+
+\newpage
+\thispagestyle{empty}
+{\par\normalfont\fontsize{30}{30}\selectfont \textbf{The Maknuune Project Team}} \\
+\vspace{3cm}
+
+\begin{minipage}{0.2\textwidth}
+\includegraphics[width=\textwidth]{shahd-profile.png}
+\end{minipage}
+\begin{minipage}{0.8\textwidth}
+\textbf{Shahd Dibas} is a doctoral student in linguistics (Syntax-semantics Interface) at the University of Oxford. She was the leading force behind the Maknuune project. She collected and annotated most of the data present in this work, and did the field data collection in various villages, towns and refugee camps. Shahd has always wanted to work on a lexicon for Palestinian Arabic. She has always wanted to preserve the linguistic heritage and cultural identity of Palestinians. Her goal is to expand Maknuune in the future and write more research on Palestinian Arabic using the Maknuune lexicon. 
+\end{minipage} \\
+
+\vspace{1cm}
+
+\begin{minipage}{0.2\textwidth}
+\includegraphics[width=\textwidth]{christian-profile.png}
+\end{minipage}
+\begin{minipage}{0.8\textwidth}
+\textbf{Christian Khairallah} is a Research Assistant at the Computational Approaches to Modeling Language Lab (CAMeL Lab) in NYU Abu Dhabi. He was the primary software engineer and computational linguist on the project. He worked on maintaining the resources using careful linguistic analysis, and developed code for streamlining well-formedness checks and quality control, as well as provided automatic slot filling to speed up repetitive tasks. Finally, he produced the dictionary that you are currently reading in pdf format. It has always been a goal of his to collect a machine-readable lexicon of levantine Arabic words and expressions, and this work is a solid step in that direction.
+\end{minipage} \\
+
+\vspace{1cm}
+
+\begin{minipage}{0.2\textwidth}
+\includegraphics[width=\textwidth]{nizar-profile.png}
+\end{minipage}
+\begin{minipage}{0.8\textwidth}
+\textbf{Nizar Habash} is the director of the Computational Approaches to Modeling Language Lab (CAMeL Lab) at NYU Abu Dhabi. He was the primary advisor of the project, and guided the definition of the guidelines for the various components, and the evaluation and quality check process of the lexicon. His area of research is artificial intelligence, specifically natural language processing and computational linguistics. He primarily works on Arabic and Arabic dialect language processing (in terms of orthography, morphology, syntax, semantics, lexicons and corpora), machine translation and dialogue systems.
+\end{minipage} \\
+
+%-----------------------------------------------------------
+% TABLE OF CONTENTS
+%-----------------------------------------------------------
+
+\pagestyle{empty} % No headers
+
+\tableofcontents % Print the table of contents itself
+
+%-----------------------------------------------------------
+% ACKNOWLEDGMENTS
+%-----------------------------------------------------------
+
+\chapter{Acknowledgments}
+This work would have never been possible without the help of so many outstanding people who believed in Maknuune from the very beginning and helped it grow with authentic data that was collected from different settings and sources in order to reflect language diversity. Some of the language users agreed to be interviewed more than one time, and they kindly connected Shahd with their grandparents and other relatives in the different villages and refugee camps in Palestine. Unfortunately, some language users preferred to be anonymous and asked us not to write their names.
+
+We are deeply grateful to all of the language users for their time and patience in answering Shahd's questions! All of them contributed largely to the growth of Maknuune. It is worth mentioning that some of the language users whom Shahd interviewed were the last living people in some villages that can now only be found in old British maps.
+
+We also need to highlight that some language users passed away since the beginning of the project. Sadly, with their death, we lost part of the truth about how our beautiful Palestine was before the \textit{Nakba} in 1948. Therefore, this work is dedicated to them and to all Palestinians no matter where they live.
+
+We hope that this collective effort would enable us to preserve the cultural identity and the linguistic heritage of Palestinians, and help the young generation of Palestinians who live in the diaspora learn more about Palestine from the language that their people use.
+
+\vspace{5mm}
+Special thanks go to Omar Sadi, Dr. Tariq Sairafy, Karmel Sarabta and Abrar Arda for their contribution to Maknuune. 
+
+\vspace{5mm}
+Finally, we also thank Ahmad Habash for generously providing the artwork used on the book cover.
+
+%-----------------------------------------------------------
+% INTRODUCTION
+%-----------------------------------------------------------
+
+\input{paper}
+
+%-----------------------------------------------------------
+% DICTIONARY
+%-----------------------------------------------------------
+
+\mainmatter
+\chapter*{\normalfont\fontsize{40}{40}\selectfont \textbf{The Dictionary \\ {\normalfont\fontsize{30}{30}\selectfont By First Root Radical}}}
+\addcontentsline{toc}{chapter}{\protect\numberline{}The Dictionary}%
+
+\textit{Phonological transcription in the rest of the book is provided under IPA specifications.}
+\thispagestyle{empty}
+
+\newpage
+\thispagestyle{empty}
+\section*{Abbreviations}
+\addcontentsline{toc}{section}{\protect\numberline{}Abbreviations}%
+
+For more information about the part-of-speech (POS) tags that usually appears after the IPA transcription, refer to the following webpage: \url{https://camel-guidelines.readthedocs.io/en/latest/morphology/}.
+
+\vspace{5mm}
+For abbreviations that come between square brackets after the POS tags, the following mapping applies:
+
+\begin{table}[h]
+  \begin{tabular}{ll}
+  m.    & Masculine singular               \\
+  f.    & Feminine singular                \\
+  pl.   & Plural                           \\
+  f.pl. & Feminine plural                  \\
+  p.    & Perfective verb aspect (\foreignlanguage{arabic}{صيغة الماضي})                \\
+  i.    & Imperfective verb aspect (\foreignlanguage{arabic}{صيغة المضارع})              \\
+  c.    & Command verb aspect (\foreignlanguage{arabic}{صيغة الأمر})                   \\
+  1p    & First person plural              \\
+  1s    & First person singular            \\
+  2fp   & Second person feminine plural    \\
+  2fs   & Second person feminine singular  \\
+  2ms   & Second person masculine singular \\
+  2p    & Second person plural             \\
+  3fp   & Third person feminine plural     \\
+  3fs   & Third person feminine singular   \\
+  3ms   & Third person masculine singular  \\
+  3p    & Third person plural              \\
+  d.    & Dual                             \\
+  \end{tabular}
+\end{table}
+
+\vspace{5mm}
+
+Whenever (\textit{ntws}) (short for non-templatic word stems) appears after a root, this means that it is not really a root, and that the entries under it are actually non-templatic words, i.e., do not possess a pattern.
+
+\vspace{5mm}
+Entries belonging to the same lemma form are grouped in the same paragraph and separated by a \textit{bullet} (\ $\bullet$\ ). If two lemmas are identical in form but are specified in two different rows (probably because of a difference in meaning), then they are separated by a \textit{lozenge} (\ $\smblkdiamond$\ ). 
+
+\vspace{5mm}
+Finally, whenever \textsc{ph.} appears after a bullet, then the following entry is a phrase (collocation, saying, multiword expression, etc.)
+
+
+
+\include{letter_sections/ء.tex}
+\include{letter_sections/ب.tex}
+\include{letter_sections/ت.tex}
+\include{letter_sections/ث.tex}
+\include{letter_sections/ج.tex}
+\include{letter_sections/ح.tex}
+\include{letter_sections/خ.tex}
+\include{letter_sections/د.tex}
+\include{letter_sections/ذ.tex}
+\include{letter_sections/ر.tex}
+\include{letter_sections/ز.tex}
+\include{letter_sections/س.tex}
+\include{letter_sections/ش.tex}
+\include{letter_sections/ص.tex}
+\include{letter_sections/ض.tex}
+\include{letter_sections/ط.tex}
+\include{letter_sections/ظ.tex}
+\include{letter_sections/ع.tex}
+\include{letter_sections/غ.tex}
+\include{letter_sections/ف.tex}
+\include{letter_sections/ق.tex}
+\include{letter_sections/ك.tex}
+\include{letter_sections/ل.tex}
+\include{letter_sections/م.tex}
+\include{letter_sections/ن.tex}
+\include{letter_sections/ه.tex}
+\include{letter_sections/و.tex}
+\include{letter_sections/ي.tex}
+
+%-----------------------------------------------------------
+% INDEX & BIBLIOGRAPHY
+%-----------------------------------------------------------
+\printindex
+\printbibliography
+
+\end{document}

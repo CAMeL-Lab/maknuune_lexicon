@@ -23,6 +23,9 @@ DIGITS_MAP = {'0': '۰', '1': '١', '2': '٢', '3': '٣', '4': '٤',
 FEAT2FANCY = {'ms': 'm.', 'fs': 'f.', 'verb:i': 'i.', 'verb:c': 'c.',
               'verb:p': 'p.', 'p': 'pl.', 'mp': 'pl.', 'fp': 'f.pl.'}
 
+FEATS_ORDER = {f: i
+    for i, f in enumerate(['ms', 'fs', 'verb:p',  'verb:c', 'verb:i', 'p', 'mp', 'fp'])} 
+
 class SubEntry:
     def __init__(self,
                  pos=None,
@@ -148,13 +151,17 @@ class Entry:
 
     def generate_root_entry_latex_str(self):
         lexeme_str = self.generate_lexeme_entry_latex_str()
+        
         root_entry = '{' + lexeme_str
+        
         if self.phrases:
             root_entry += BULLET
             root_entry += self.generate_phrases_latex_str()
+        
         if self.examples:
             root_entry += self.generate_examples_latex_str()
-            root_entry += '} \\vspace{2mm}'
+        
+        root_entry += '} \\vspace{2mm}'
 
         return root_entry
     
@@ -329,7 +336,7 @@ def get_ipa(caphis):
     return ', '.join(ipa)
 
 
-def generate_entry(form2rows, pos, phrases, tipa=False):
+def generate_entry(form2rows, phrases, tipa=False):
     index = 1
     examples = []
     entry_class = Entry()
@@ -353,12 +360,12 @@ def generate_entry(form2rows, pos, phrases, tipa=False):
 
         ipa_lemma = get_ipa([rows[0]['CAPHI++']])
         inflection.ipa = ipa_lemma
-        inflection.pos = pos.replace('_', '\\textunderscore ')
+        inflection.pos = rows[0]['ANALYSIS'].split(':')[0].lower().replace('_', '\\textunderscore ')
 
         for feat, rows in feat2rows.items():
             if feat:
-                feat = f'verb:{feat}' if pos == 'verb' else feat
-                inflection.feats = FEAT2FANCY.get(feat, feat)
+                feat = f'verb:{feat}' if inflection.pos == 'verb' else feat
+                inflection.feats = feat
 
             inflection_ = inflection
             paradigms = []
@@ -450,6 +457,19 @@ def generate_entry(form2rows, pos, phrases, tipa=False):
     return entry
 
 
+def sort_inflections(form2rows, pos):
+    form2rows_ = []
+    for form_feat_rows in form2rows:
+        (form, feat), rows = form_feat_rows
+        feat = f'verb:{feat}' if pos == 'VERB' else feat
+        feat = feat.lower() if type(feat) is str else feat
+        form2rows_.append(((form, feat), rows))
+    form2rows_ = sorted(form2rows_,
+        key=lambda form_feat_rows: FEATS_ORDER.get(form_feat_rows[0][1], 10))
+    return form2rows_
+    
+
+
 if __name__ == "__main__":
     caphi_inventory = pd.read_csv('caphi_table_full.tsv', sep='\t')
     caphi2ipa = {}
@@ -519,7 +539,6 @@ if __name__ == "__main__":
                     raise NotImplementedError
                 if root != 'NTWS':
                     root_ = f"\\color{{blue}}\\foreignlanguage{{arabic}}{{{root}}}\\color{{blue}}{{{ntws if ntws else ''}}}"
-                    # root_flipped = f"\\foreignlanguage{{arabic}}{{{root}}}"
                     print('\\vspace{-3mm}', file=f)
                     print(f"\\markboth{{{root_}}}{{{root_}}}\\subsection*{{{root_}\\index{{{root_}}}}}", '\n', file=f)
                 lemmapos2type2form2rows = dict(sorted(lemmapos2type2form2rows.items(), key=lambda x: x[0]))
@@ -531,7 +550,8 @@ if __name__ == "__main__":
                     form2rows_ = []
                     form2rows_ += [(form, rows) for form, rows in form2rows.items() if form == lemma]
                     form2rows_ += [(form, rows) for form, rows in form2rows.items() if form != lemma]
-                    lemma_entry = generate_entry(form2rows_, pos.lower(), type2form2rows['phrases'])
+                    form2rows_ = sort_inflections(form2rows_, pos)
+                    lemma_entry = generate_entry(form2rows_, type2form2rows['phrases'])
                     print(lemma_entry, file=f)
                     print(file=f)
             print(f"\\end{{multicols}}", file=f)

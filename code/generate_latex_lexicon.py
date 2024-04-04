@@ -1,10 +1,10 @@
 import re
+import argparse
+import os
 
 import pandas as pd
 from numpy import nan
 import gspread
-
-import diff_visual
 
 GLOSS_DELIM_RE = re.compile(r'[;#]')
 CAPHI_DELIM_RE = re.compile(r'[,#]')
@@ -233,8 +233,6 @@ class Entry:
             entry += f'{example} •<br>'
 
         entry += '</body>'
-
-        # with open('code/anki.html', 'w') as f: f.write(entry)
             
         return entry
         
@@ -471,6 +469,18 @@ def sort_inflections(form2rows, pos):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-test", default=False,
+                        action='store_true', help="Only convert first letter (ء) to tex (for testing).")
+    parser.add_argument("-save_dir", default='',
+                        type=str, help="Path of directory where the indivual section (root letters) tex files will be saved.")
+    parser.add_argument("-maknuune_tabular", default='',
+                        type=str, help="Path to the tabular version of Maknuune to be converted to TeX.")
+    parser.add_argument("-service_account", default='',
+                        type=str, help="Path of the JSON file containing the information about the service account used for the Google API.")
+    parser.add_argument("-sheet", default='', nargs=2,
+                        type=str, help="Spreadsheet and sheet (2 args) to download holding the tabular format of Maknuune.")
+    args = parser.parse_args()
     caphi_inventory = pd.read_csv('caphi_table_full.tsv', sep='\t')
     caphi2ipa = {}
     for _, row in caphi_inventory.iterrows():
@@ -489,20 +499,20 @@ if __name__ == "__main__":
     }
     caphi2ipa = {**caphi2ipa, **{k: v['ipa'] for k, v in CAPHI_SPECIAL_CHARS_MAP.items()}}
 
-
-    sa = gspread.service_account("/Users/chriscay/.config/gspread/service_account.json")
-    # sh = sa.open('Copy of Maknuune-Release-Camera-Ready')
-    # sheet = sh.worksheet('Maknuune-v1.0')
-    sh = sa.open('Maknuune-Release-Camera-Ready-v1.0')
-    sheet = sh.worksheet('Maknuune-v1.0.2')
-    pacl = pd.DataFrame(sheet.get_all_records()).astype(str)
+    if args.service_account:
+        sa = gspread.service_account(args.service_account)
+        sh = sa.open(args.sheet[0])
+        sheet = sh.worksheet(args.sheet[1])
+        pacl = pd.DataFrame(sheet.get_all_records()).astype(str)
+    else:
+        pacl = pd.read_csv(args.maknuune_tabular).astype(str)
+    
     pacl_obj = pacl.select_dtypes(['object'])
     pacl[pacl_obj.columns] = pacl_obj.apply(lambda x: x.str.strip())
     pacl = pacl.replace(nan, '', regex=True)
     pacl['CAPHI++'] = pacl.apply(lambda row: re.sub(r'II', '||', row['CAPHI++']), axis=1)
     pacl = pacl.replace('\"', '', regex=True)
     pacl = pacl.replace('%', '\\%', regex=True)
-    # pacl.loc[pacl['ROOT'] == 'NTWS', 'ROOT'] = pacl.loc[pacl['ROOT'] == 'NTWS', 'ROOT_NTWS']
 
     first_radical2root2lemmapos2type2form2rows = {}
     for _, row in pacl.iterrows():
@@ -524,9 +534,9 @@ if __name__ == "__main__":
     id2inflections = {}
     
     for first_radical, root2lemmapos2type2form2rows in first_radical2root2lemmapos2type2form2rows.items():
-        with open(f'/Users/chriscay/Library/Mobile Documents/com~apple~CloudDocs/NYUAD/palestinian_lexicon/maknuune_dict/letter_sections/{first_radical}.tex', 'w') as f:
-            # if first_radical not in 'ء':
-            #     continue
+        with open(os.path.join(args.save_dir, f'{first_radical}.tex'), 'w') as f:
+            if args.test and first_radical not in 'ء':
+                continue
             print(begin_document, file=f)
             print(f"\\begin{{figure*}}[t!]\\centering\\includegraphics[width=0.15\\linewidth]{{letter_images/{first_radical}.png}}\\end{{figure*}}", file=f)
             print(f"\\color{{white}}", file=f)

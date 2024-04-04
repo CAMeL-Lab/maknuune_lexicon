@@ -248,7 +248,7 @@ def well_formedness(lexicon_split,
                 elif text[0] == 'إ' and text[1] != 'ِ':
                     text = re.sub(r'^إ', 'إِ', text)
                 elif f =='form' and row['ANALYSIS'] == 'VERB:I' and text[0] == 'ي' and text[1] not in 'َُِْ':
-                    text = re.sub(r'ي', 'يْ', text)
+                    text = re.sub(r'^ي', 'يْ', text)
                 
                 message += (' ' if message else '') + _diacritization_check(text, f, caphi, is_phrase)
         
@@ -300,8 +300,9 @@ if __name__ == "__main__":
     sa = gspread.service_account("/Users/chriscay/.config/gspread/service_account.json")
     # sh = sa.open('PACL-Letter-Split')
     # sheet_names = utils.sheet_names
-    sh = sa.open('Maknuune-Release-Camera-Ready')
-    sheet_names = ['Maknuune-v0.9']
+    sh = sa.open('Maknuune-WIP')
+    sheet_names = ['Maknuune-v1.1']
+    # sheet_names = ['Maknuune-WIP-Add']
 
     for sheet_name in tqdm(sheet_names):
         sheet = sh.worksheet(sheet_name)
